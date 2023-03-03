@@ -39,9 +39,6 @@ export class User extends BaseEntity {
   })
   role: UserRole;
 
-  @Column({ type: 'varchar', length: 300, unique: true })
-  firebaseUID: string;
-
   @Column({ type: 'varchar', length: 100, nullable: true, unique: true })
   phoneNumber: string;
 
