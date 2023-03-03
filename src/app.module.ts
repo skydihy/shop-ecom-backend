@@ -1,5 +1,5 @@
 import './environments';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -15,6 +15,7 @@ import { Cart } from './models/carts/entities/cart.entity';
 import { Transaction } from './models/transactions/entities/transaction.entity';
 import { ProductCategory } from './models/products/entities/product-category.entity';
 import { CartItem } from './models/carts/entities/cartItem.entity';
+import cookieSession from 'cookie-session';
 
 @Module({
   imports: [
@@ -48,4 +49,14 @@ import { CartItem } from './models/carts/entities/cartItem.entity';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(
+        cookieSession({
+          keys: ['shop_ecom_session_key'],
+        }),
+      )
+      .forRoutes('*');
+  }
+}
