@@ -8,6 +8,8 @@ import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { Repository } from 'typeorm';
 import { promisify } from 'util';
 import { BaseService } from '../base/base.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { SignInDto } from './dto/sign-in.dto';
 import { User, UserDocument } from './entities/user.entity';
 
 const scrypt = promisify(_scrypt);
@@ -20,7 +22,8 @@ export class AuthService extends BaseService<User> {
     super(userRepo);
   }
 
-  async signup(username: string, password: string) {
+  async signup(body: CreateUserDto) {
+    const { username, password } = body;
     const userResult = await this.findByCondition({
       where: {
         username,
@@ -35,12 +38,13 @@ export class AuthService extends BaseService<User> {
     const hash = (await scrypt(password, salt, 32)) as Buffer;
     const hashed = salt + '.' + hash.toString('hex');
 
-    const user = this.create({ username, password: hashed });
+    const user = this.create({ ...body, password: hashed });
 
     return await this.save(user);
   }
 
-  async signin(username: string, password: string) {
+  async signin(body: SignInDto) {
+    const { username, password } = body;
     const userResult = await this.findOneByCondition({
       where: {
         username,
