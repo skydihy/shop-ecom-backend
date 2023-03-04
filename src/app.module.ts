@@ -6,16 +6,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './models/users/users.module';
 import { User } from './models/users/entities/user.entity';
 import { ProductsModule } from './models/products/products.module';
-import { CartsModule } from './models/carts/carts.module';
 import { TransactionsModule } from './models/transactions/transactions.module';
 import { AddressesModule } from './models/addresses/addresses.module';
 import { Address } from './models/addresses/entities/address.entity';
 import { Product } from './models/products/entities/product.entity';
-import { Cart } from './models/carts/entities/cart.entity';
 import { Transaction } from './models/transactions/entities/transaction.entity';
 import { ProductCategory } from './models/products/entities/product-category.entity';
-import { CartItem } from './models/carts/entities/cartItem.entity';
 import cookieSession from 'cookie-session';
+import { TransactionToProduct } from './models/transactions/entities/transactionToProduct.entity';
 
 @Module({
   imports: [
@@ -33,15 +31,13 @@ import cookieSession from 'cookie-session';
       entities: [
         User,
         Address,
-        Cart,
-        CartItem,
         Transaction,
+        TransactionToProduct,
         Product,
         ProductCategory,
       ],
     }),
     UsersModule,
-    CartsModule,
     TransactionsModule,
     AddressesModule,
     ProductsModule,

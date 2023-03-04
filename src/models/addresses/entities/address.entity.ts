@@ -4,7 +4,7 @@ import {
   TransactionDocument,
 } from 'src/models/transactions/entities/transaction.entity';
 import { User, UserDocument } from 'src/models/users/entities/user.entity';
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, OneToOne, ManyToOne } from 'typeorm';
 
 @Entity({ name: 'address' })
 export class Address extends BaseEntity {
@@ -26,11 +26,10 @@ export class Address extends BaseEntity {
   @Column({ type: 'varchar', length: 300, nullable: true })
   country: string;
 
-  @OneToOne(() => User, (user) => user.address)
+  @ManyToOne(() => User, (user) => user.id)
   user: UserDocument;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.id)
-  @JoinColumn()
+  @OneToOne(() => Transaction, (transaction) => transaction.id)
   transaction: TransactionDocument;
 }
 

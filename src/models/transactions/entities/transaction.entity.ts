@@ -4,38 +4,45 @@ import {
   AddressDocument,
 } from 'src/models/addresses/entities/address.entity';
 import { BaseEntity } from 'src/models/base/entities/base.entity';
-import { Cart, CartDocument } from 'src/models/carts/entities/cart.entity';
 
 import { User, UserDocument } from 'src/models/users/entities/user.entity';
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
+import {
+  TransactionToProduct,
+  TransactionToProductDocument,
+} from './transactionToProduct.entity';
 
 @Entity({ name: 'transaction' })
 export class Transaction extends BaseEntity {
-  @Column({ type: 'varchar', length: 300, nullable: false, unique: true })
-  transactionId: string;
-
-  @ManyToOne(() => User, (user) => user.id)
-  @JoinColumn()
-  user: UserDocument;
-
-  @OneToOne(() => Cart, (cart) => cart.id)
-  @JoinColumn()
-  cart: CartDocument;
-
   @Column({
     type: 'varchar',
     length: 100,
     default: TransactionStatus.PENDING,
-    nullable: false,
   })
   status: TransactionStatus;
 
-  @Column({ type: 'float8', default: 0, nullable: false })
+  @Column({ type: 'float8', default: 0 })
   totalPrice: number;
 
-  @ManyToOne(() => Address, (address) => address.id)
+  @ManyToOne(() => User, (user) => user.id)
+  user: UserDocument;
+
+  @OneToOne(() => Address, (address) => address.id)
   @JoinColumn()
   address: AddressDocument;
+
+  @OneToMany(
+    () => TransactionToProduct,
+    (transactionToProduct) => transactionToProduct.id,
+  )
+  transactionToProduct: TransactionToProductDocument[];
 }
 
 export type TransactionDocument = Transaction & BaseEntity;

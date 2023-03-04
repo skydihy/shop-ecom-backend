@@ -12,6 +12,7 @@ import {
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
+import { SignInDto } from './dto/sign-in.dto';
 import { UserDto } from './dto/user.dto';
 
 import { User } from './entities/user.entity';
@@ -36,7 +37,7 @@ export class UsersController {
   @Serialize(UserDto)
   @Post('/signup')
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
-    const user = await this.authService.signup(body.username, body.password);
+    const user = await this.authService.signup(body);
     session.userId = user.id;
 
     return user;
@@ -44,8 +45,8 @@ export class UsersController {
 
   @Serialize(UserDto)
   @Post('/signin')
-  async signin(@Body() body: CreateUserDto, @Session() session: any) {
-    const user = await this.authService.signin(body.username, body.password);
+  async signin(@Body() body: SignInDto, @Session() session: any) {
+    const user = await this.authService.signin(body);
     session.userId = user.id;
 
     return user;

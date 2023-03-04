@@ -7,7 +7,7 @@ import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity({ name: 'product_category' })
 export class ProductCategory extends BaseEntity {
-  @Column({ type: 'varchar', length: 300, nullable: false })
+  @Column({ type: 'varchar', length: 300 })
   name: string;
 
   @Column({ type: 'varchar', length: 300, nullable: true })
