@@ -1,8 +1,6 @@
 import { Exclude, Expose } from 'class-transformer';
 import { UserRole } from '@/constants';
 import { TransactionDocument } from '@/models/transactions/entities/transaction.entity';
-import { CartItemDocument } from '@/models/carts/entities/cartItem.entity';
-import { AddressDocument } from '@/models/addresses/entities/address.entity';
 
 export class UserDto {
   @Expose()
@@ -33,11 +31,5 @@ export class UserDto {
   balance: number;
 
   @Expose()
-  address: AddressDocument;
-
-  @Expose()
   transaction: TransactionDocument[];
-
-  @Expose()
-  cart: CartItemDocument;
 }
