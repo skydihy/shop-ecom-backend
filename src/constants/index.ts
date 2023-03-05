@@ -14,3 +14,11 @@ export enum TransactionStatus {
   REJECT = 'REJECT',
   IN_ACTIVE = 'IN_ACTIVE',
 }
+
+export enum ProductCategory {
+  EARRING = 'Earring',
+  NECKLACE = 'Necklace',
+  BRACELET = 'Bracelet',
+  RING = 'Ring',
+  HAIR_ORNAMENT = 'Hair Ornament',
+}
