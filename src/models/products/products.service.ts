@@ -12,10 +12,26 @@ export class ProductsService extends BaseService<Product> {
     super(productRepo);
   }
 
+  /**
+   * Get All Product
+   * @returns ProductDocument[]
+   **/
   async getAllProduct() {
     return await this.productRepo
       .createQueryBuilder('product')
       .leftJoinAndSelect('product.category', 'product_category')
       .getMany();
+  }
+
+  /**
+   * Get a Product
+   * @returns ProductDocument
+   **/
+  async getProductById(productId: number) {
+    return await this.findOneByCondition({
+      where: {
+        id: productId,
+      },
+    });
   }
 }

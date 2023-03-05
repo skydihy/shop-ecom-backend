@@ -1,40 +1,29 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
-import { TransactionsService } from './transactions.service';
+import { instanceToPlain } from 'class-transformer';
+import { AuthGuard } from '@/guards/auth.guard';
+import { Controller, Post, UseGuards } from '@nestjs/common';
+import { CurrentUser } from '../users/decorators/current-user.decorator';
+import { User } from '../users/entities/user.entity';
+import { TransactionToProductService } from './transaction-to-product.service';
+import { ProductsService } from '../products/products.service';
 
 @Controller('transactions')
 export class TransactionsController {
-  constructor(private readonly transactionsService: TransactionsService) {}
+  constructor(
+    private transactionToProductService: TransactionToProductService,
+    private productService: ProductsService,
+  ) {}
 
-  // @Post()
-  // create(@Body() createTransactionDto: CreateTransactionDto) {
-  //   return this.transactionsService.create(createTransactionDto);
-  // }
+  @UseGuards(AuthGuard)
+  @Post('/add')
+  async createTransaction(@CurrentUser() user: User) {
+    const mockProducts = [
+      { product: await this.productService.getProductById(1), quantity: 2 },
+      { product: await this.productService.getProductById(2), quantity: 1 },
+    ];
 
-  // @Get()
-  // findAll() {
-  //   return this.transactionsService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.transactionsService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateTransactionDto: UpdateTransactionDto) {
-  //   return this.transactionsService.update(+id, updateTransactionDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.transactionsService.remove(+id);
-  // }
+    return await this.transactionToProductService.createTransactionToProduct({
+      user: instanceToPlain(user)[0],
+      products: mockProducts,
+    });
+  }
 }
