@@ -55,5 +55,9 @@ export class UsersController {
   @Post('/signout')
   async signout(@Session() session: any) {
     session.userId = null;
+    return {
+      message: 'signed out',
+      success: true,
+    };
   }
 }

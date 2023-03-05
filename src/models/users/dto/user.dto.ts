@@ -1,8 +1,9 @@
 import { Exclude, Expose } from 'class-transformer';
 import { UserRole } from '@/constants';
 import { TransactionDocument } from '@/models/transactions/entities/transaction.entity';
+import { BaseDto } from '@/models/base/dto/base.dto';
 
-export class UserDto {
+export class UserDto extends BaseDto {
   @Expose()
   lastLogin: Date;
 
