@@ -1,5 +1,5 @@
 import { BaseDto } from '@/models/base/dto/base.dto';
-import { classToPlain, Expose, Transform } from 'class-transformer';
+import { instanceToPlain, Expose, Transform } from 'class-transformer';
 import { ProductCategoryDto } from './product-category.dto';
 
 export class GetAllProductDto extends BaseDto {
@@ -16,6 +16,6 @@ export class GetAllProductDto extends BaseDto {
   stock: number;
 
   @Expose()
-  @Transform(({ obj }) => classToPlain(obj.category))
+  @Transform(({ obj }) => instanceToPlain(obj.category))
   category: ProductCategoryDto;
 }
