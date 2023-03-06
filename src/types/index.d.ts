@@ -1,8 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { Order } from '@/constants';
-import { GeoShapeType } from '@/constants/geo';
-import { Base } from '@/schemas/base.schema';
-import * as admin from 'firebase-admin';
 
 type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
   T,
@@ -15,4 +11,9 @@ type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
 export type PropertyOf<T> = Pick<
   T,
   Exclude<keyof T, FilteredKeys<T, Function>>
+>;
+
+export type ExtractModel<T> = Omit<
+  T,
+  keyof Omit<Document, 'id' | 'createdAt' | 'updatedAt'>
 >;

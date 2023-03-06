@@ -10,7 +10,7 @@ import { TransactionStatus } from '@/constants';
 import { ICreateTransaction } from './types';
 
 @Injectable()
-export class TransactionsService extends BaseService<Transaction> {
+export class TransactionsService extends BaseService<TransactionDocument> {
   constructor(
     @InjectRepository(Transaction)
     private transactionRepo: Repository<TransactionDocument>,

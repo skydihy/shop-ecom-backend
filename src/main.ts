@@ -11,6 +11,6 @@ async function bootstrap() {
       keys: ['shop_ecom_session_key'],
     }),
   );
-  await app.listen(3000);
+  await app.listen(process.env.BACKEND_PORT);
 }
 bootstrap();

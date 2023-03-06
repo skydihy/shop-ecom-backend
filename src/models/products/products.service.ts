@@ -5,7 +5,7 @@ import { BaseService } from '../base/base.service';
 import { Product, ProductDocument } from './entities/product.entity';
 
 @Injectable()
-export class ProductsService extends BaseService<Product> {
+export class ProductsService extends BaseService<ProductDocument> {
   constructor(
     @InjectRepository(Product) private productRepo: Repository<ProductDocument>,
   ) {
@@ -14,7 +14,7 @@ export class ProductsService extends BaseService<Product> {
 
   /**
    * Get All Product
-   * @returns ProductDocument[]
+   * @returns Promise<ProductDocument[]>
    **/
   async getAllProduct() {
     return await this.productRepo
@@ -25,7 +25,8 @@ export class ProductsService extends BaseService<Product> {
 
   /**
    * Get a Product
-   * @returns ProductDocument
+   * @params productId: nubmer
+   * @returns Promise<ProductDocument>
    **/
   async getProductById(productId: number) {
     return await this.findOneByCondition({
