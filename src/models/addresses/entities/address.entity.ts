@@ -8,7 +8,7 @@ import { Column, Entity, OneToOne, ManyToOne } from 'typeorm';
 
 @Entity({ name: 'address' })
 export class Address extends BaseEntity {
-  @Column({ type: 'varchar', length: 300, nullable: true })
+  @Column({ type: 'varchar' })
   address: string;
 
   @Column({ type: 'varchar', length: 300, nullable: true })
@@ -17,13 +17,13 @@ export class Address extends BaseEntity {
   @Column({ type: 'varchar', length: 300, nullable: true })
   district: string;
 
-  @Column({ type: 'varchar', length: 300, nullable: true })
+  @Column({ type: 'varchar', length: 300 })
   city: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100 })
   postalCode: string;
 
-  @Column({ type: 'varchar', length: 300, nullable: true })
+  @Column({ type: 'varchar', length: 300 })
   country: string;
 
   @ManyToOne(() => User, (user) => user.id)
