@@ -50,7 +50,8 @@ export class TransactionToProductService extends BaseService<TransactionToProduc
         product: instanceToPlain(products[i]).product,
         quantity: instanceToPlain(products[i]).quantity,
       });
-      this.transactionToProductRepo.save(data);
+
+      await this.transactionToProductRepo.save(data);
     }
 
     return {
