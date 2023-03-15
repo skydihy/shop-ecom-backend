@@ -11,11 +11,11 @@ type ModelPropertyOf<T> = PropertyOf<T>;
 export class BaseService<T extends BaseDocument> {
   constructor(@InjectRepository(Repository) private repo: Repository<T>) {}
 
-  public create(data: DeepPartial<T>): T {
-    return this.repo.create(data);
+  public async save(data: DeepPartial<T>): Promise<T> {
+    return await this.repo.save(data);
   }
 
-  public async save(data: DeepPartial<T>): Promise<T> {
+  public async create(data: DeepPartial<T>): Promise<T> {
     return await this.repo.save(data);
   }
 

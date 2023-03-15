@@ -38,9 +38,7 @@ export class AuthService extends BaseService<User> {
     const hash = (await scrypt(password, salt, 32)) as Buffer;
     const hashed = salt + '.' + hash.toString('hex');
 
-    const user = this.create({ ...body, password: hashed });
-
-    return await this.save(user);
+    return await this.create({ ...body, password: hashed });
   }
 
   async signin(body: SignInDto) {
@@ -59,6 +57,10 @@ export class AuthService extends BaseService<User> {
     const hash = (await scrypt(password, salt, 32)) as Buffer;
 
     if (hash.toString('hex') === storedHash) {
+      await this.updateOneById(userResult.id, {
+        lastLogin: new Date().toISOString(),
+      });
+
       return userResult;
     } else {
       throw new BadRequestException('bad password');
