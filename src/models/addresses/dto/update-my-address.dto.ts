@@ -1,33 +1,58 @@
-import { Expose } from 'class-transformer';
+import { SimpleUserDto } from '@/models/users/dto/user.dto';
+import { Expose, Type } from 'class-transformer';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
+/**
+ * Request
+ */
 export class UpdateMyAddressDto {
-  @Expose()
   @IsNumber()
   addressId: number;
 
-  @Expose()
   @IsString()
   address: string;
 
-  @Expose()
   @IsString()
   @IsOptional()
   subDistrict: string;
 
-  @Expose()
   @IsString()
   district: string;
 
-  @Expose()
   @IsString()
   city: string;
 
-  @Expose()
   @IsString()
   postalCode: string;
 
-  @Expose()
   @IsString()
+  country: string;
+}
+
+/**
+ * Response
+ */
+
+export class UpdateMyAddressResponseDto {
+  @Expose()
+  @Type(() => SimpleUserDto)
+  user: SimpleUserDto;
+
+  @Expose()
+  address: string;
+
+  @Expose()
+  subDistrict: string;
+
+  @Expose()
+  district: string;
+
+  @Expose()
+  city: string;
+
+  @Expose()
+  postalCode: string;
+
+  @Expose()
   country: string;
 }
