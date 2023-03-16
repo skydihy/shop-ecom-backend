@@ -9,6 +9,7 @@ import { BaseService } from '../base/base.service';
 import { Repository } from 'typeorm';
 import { ICreateTransactionToProduct } from './types';
 import { TransactionsService } from './transactions.service';
+import { TransactionStatus } from '@/constants';
 
 @Injectable()
 export class TransactionToProductService extends BaseService<TransactionToProduct> {
@@ -27,6 +28,7 @@ export class TransactionToProductService extends BaseService<TransactionToProduc
   async createTransactionToProduct({
     user,
     products,
+    deliveryAddress,
   }: ICreateTransactionToProduct) {
     let totalPrice = 0;
 
@@ -35,12 +37,12 @@ export class TransactionToProductService extends BaseService<TransactionToProduc
       totalPrice += instanceToPlain(products[i]).product.price;
     }
 
-    // TODO: get user address
     // insert into transaction table
-    const newTransaction = await this.transactionService.createTransaction({
+    const newTransaction = await this.transactionService.create({
       user,
+      status: TransactionStatus.PENDING,
       totalPrice,
-      address: null,
+      address: deliveryAddress,
     });
 
     // loop: insert into transaction to product relation table
