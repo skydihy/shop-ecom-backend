@@ -51,6 +51,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Transaction, (transaction) => transaction.id)
   transaction: TransactionDocument[];
+
+  @Column({ type: 'float8', nullable: true })
+  deliveryAddressId: number;
 }
 
 export type UserDocument = User & BaseEntity;
