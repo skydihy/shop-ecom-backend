@@ -20,4 +20,5 @@ export interface ICreateTransactionToProduct {
     product: ProductDocument;
     quantity: number;
   }[];
+  deliveryAddress: AddressDocument;
 }

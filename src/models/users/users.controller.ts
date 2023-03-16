@@ -13,7 +13,7 @@ import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SignInDto } from './dto/sign-in.dto';
-import { UserDto } from './dto/user.dto';
+import { SimpleUserDto } from './dto/user.dto';
 
 import { User } from './entities/user.entity';
 import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
@@ -27,14 +27,14 @@ export class UsersController {
     private authService: AuthService,
   ) {}
 
-  @Serialize(UserDto)
+  @Serialize(SimpleUserDto)
   @Get('/me')
   @UseGuards(AuthGuard)
   async getMe(@CurrentUser() user: User) {
     return user;
   }
 
-  @Serialize(UserDto)
+  @Serialize(SimpleUserDto)
   @Post('/signup')
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signup(body);
@@ -43,7 +43,7 @@ export class UsersController {
     return user;
   }
 
-  @Serialize(UserDto)
+  @Serialize(SimpleUserDto)
   @Post('/signin')
   async signin(@Body() body: SignInDto, @Session() session: any) {
     const user = await this.authService.signin(body);

@@ -11,28 +11,4 @@ export class ProductsService extends BaseService<ProductDocument> {
   ) {
     super(productRepo);
   }
-
-  /**
-   * Get All Product
-   * @returns Promise<ProductDocument[]>
-   **/
-  async getAllProduct() {
-    return await this.productRepo
-      .createQueryBuilder('product')
-      .leftJoinAndSelect('product.category', 'product_category')
-      .getMany();
-  }
-
-  /**
-   * Get a Product
-   * @params productId: nubmer
-   * @returns Promise<ProductDocument>
-   **/
-  async getProductById(productId: number) {
-    return await this.findOneByCondition({
-      where: {
-        id: productId,
-      },
-    });
-  }
 }

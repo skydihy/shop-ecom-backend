@@ -1,15 +1,17 @@
 import { Serialize } from '@/interceptors/serialize.interceptor';
 import { Controller, Get } from '@nestjs/common';
-import { GetAllProductDto } from './dto/get-all-product.dto';
+import { SimpleProduct } from './dto/product.dto';
 import { ProductsService } from './products.service';
 
 @Controller('products')
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
 
-  @Serialize(GetAllProductDto)
+  @Serialize(SimpleProduct)
   @Get()
   async getAllProduct() {
-    return await this.productsService.getAllProduct();
+    return await this.productsService.findByCondition({
+      relations: ['category'],
+    });
   }
 }
